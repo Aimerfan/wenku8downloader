@@ -1,11 +1,8 @@
 from bs4 import BeautifulSoup
-import requests
 import logging
+import config
 import csv
 import os
-
-
-path = ['http://www.wenku8.com/modules/article/articleinfo.php?id=', '&charset=big5']
 
 
 def writelist(books):
@@ -19,18 +16,13 @@ def update(start=1, end=10000):
 
     for id in range(start, end):
         # 抓頁面
-        page = requests.Session()
-        page = page.get(path[0] + str(id) + path[1])
-        if page.status_code != 200:
-            print('http error, error code: {0}'.format(page.status_code))
-            break
+        page = config.get_web_page(config.book_path + str(id) + config.charset, encoding='big5')
 
         # 連線正常，判斷內容
-        page.encoding = 'big5'
         page = BeautifulSoup(page.text, 'html.parser')
         if page.find('title').text == '出現錯誤':
             error += 1
-            logging.warning('page:{id} lost.'.format(id=id))
+            logging.warning('book:{id} lost.'.format(id=id))
             # 連續抓空五次就當成結束
             if error == 5:
                 print('Fetch over.')
@@ -47,11 +39,11 @@ def update(start=1, end=10000):
                 attr.append(i.text.split('︰')[1].split('\x00')[0])
 
             books.append(attr)
-            print('page:{id} update success.'.format(id=id))
+            print('book:{id} update success.'.format(id=id))
 
         id += 1
 
-    print('Online Update index id {0}-{1} Success.'.format(start, end-1))
+    print('Online Update book id {0}-{1} Success.'.format(start, end-1))
     return books
 
 
