@@ -71,5 +71,6 @@ class wenkuSuit:
 
 
 if __name__ == '__main__':
+    print('功能測試中... 下載 id: 1 \'文學少女\'')
     literal = wenkuSuit(1)
     literal.get_content()
