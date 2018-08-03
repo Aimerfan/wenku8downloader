@@ -8,23 +8,23 @@
 
 下載之資料請於24小時內刪除，非法使用之後果程式作者概不負責。
 
-### How to Use
+## How to Use
 
-execute with `python wenku8downloader` in cmd.
+execute with `> python wenku8downloader` in cmd.
 
-Use 'help' instruction in program to get more information.
+Use `help` instruction in program to get more information.
 
-### Request Models
+## Request Models
     bs4
     requests
 
-### Description
-* wenku8donwloader.py: **主程式，未完工**，預計提供一些搜尋並指定下載的能力。
+## Description
+* wenku8donwloader.py: **主程式**，目前可以動，提供簡單搜尋並指定下載的能力。
 * config.py: 某些跨檔案公用變數, 方法的存放區。
 * updater.py: 書庫索引的updater。
 * booklist.csv: 書庫的索引資料庫，正常狀況會先從這裡找出要下載的id後再利用downloader下載全文。
 * downloader.py: 可以索引並下載指定的書籍系列
 
-### Reference
+## Reference
 * [wenku8](https://github.com/Messiahhh/wenku8)
 * [CSNovelCrawler](https://github.com/rngmontoli/CSNovelCrawler)
