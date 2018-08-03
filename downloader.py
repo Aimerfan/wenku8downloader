@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from sys import stdout
 import config
 import os
 
@@ -43,6 +44,11 @@ class wenkuSuit:
             os.mkdir(self.title)
         os.chdir(self.title)
 
+        chcount = 0
+        for count in booklist:
+            chcount += len(count) - 1
+
+        recived = 0
         for book in booklist:
             if not os.path.isdir(book[0]):
                 os.mkdir(book[0])
@@ -55,10 +61,13 @@ class wenkuSuit:
                 with open(chapter[0] + '.txt', 'w', encoding='utf-8') as chwriter:
                     chwriter.write(content.text.lstrip())
 
+                recived += 1
+                stdout.write('\rdownloading chapter ({0}/{1})...'.format(recived, chcount))
+
             os.chdir('..')
 
         os.chdir('..')
-        print('{0} download success'.format(self.title))
+        print('\n{0} downloaded success'.format(self.title))
 
 
 if __name__ == '__main__':

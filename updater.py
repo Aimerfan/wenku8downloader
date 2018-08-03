@@ -12,6 +12,7 @@ def writelist(books):
 
 def update(start=1, end=10000):
     error = 0
+    last_one = 0
     books = []
 
     for id in range(start, end):
@@ -31,6 +32,7 @@ def update(start=1, end=10000):
             for i in range(id-error, id):
                 books.append([str(id)])
             error = 0
+            last_one = id
             table = page.find('table')
             attr = [str(id), table.find('b').text.replace('\x00', '')]
             detail = table.find_all('td', width='20%')
@@ -43,7 +45,10 @@ def update(start=1, end=10000):
 
         id += 1
 
-    print('Online Update book id {0}-{1} Success.'.format(start, end-1))
+    if last_one:
+        print('Online Update book id {0}-{1} Success.'.format(start, last_one))
+    else:
+        print('There is no new book.')
     return books
 
 
@@ -55,12 +60,12 @@ def loadlist(checknew=False, force=False):
         with open('booklist.csv', 'r', encoding='utf-8') as readcsv:
             books = [i for i in csv.reader(readcsv)]
             if checknew:
-                news = update(len(books) + 1, 20)
+                news = update(len(books) + 1)
                 books.extend(news)
                 writelist(books)
     return books
 
 
 if __name__ == "__main__":
-    update()
+    loadlist(True)
 

@@ -1,5 +1,6 @@
 # import downloader
 import updater
+import config
 
 
 def search_from_list(booklist, args):
